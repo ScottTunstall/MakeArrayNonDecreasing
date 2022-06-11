@@ -27,11 +27,27 @@ namespace Tests
         [TestMethod]
         public void TestMethod2()
         {
+            int[] nums = {4, 5, 7, 7, 13};
+
+            var totalSteps = _sut.TotalSteps(nums);
+
+            Assert.AreEqual(0, totalSteps);
+
+        }
+
+
+
+        [TestMethod]
+        public void TestMethod3()
+        {
             int[] nums = {10, 1, 2, 3, 4, 5, 6, 1, 2, 3};
 
             var totalSteps = _sut.TotalSteps(nums);
 
-            Assert.IsTrue(totalSteps != 0);
+            Assert.AreEqual(6, totalSteps);
         }
+
+
+
     }
 }

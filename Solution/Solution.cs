@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,75 +9,45 @@ namespace MakeArrayNonDecreasing
 {
     public class Solution
     {
+        struct Pair
+        {
+            public int Number;
+            public int Count;
+        }
+
         public int TotalSteps(int[] nums)
         {
+            Stack<Pair> stack = new ();
             int totalSteps = 0;
-
-            var skipTo = new int[nums.Length];
-
-            bool goAgain;
-
-            do
+            
+            for (int i = nums.Length- 1; i >= 0; i--)
             {
-                goAgain = false;
-
-                for (int i = 0; i < nums.Length; i++)
+                int cnt = 0;
+                while (stack.Count > 0 && stack.Peek().Number < nums[i])
                 {
-                    i = FindNextIndexToSkipTo(ref skipTo, i);
-                    if (i == -1)
-                        break;
-
-                    var l = nums[i];
-
-                    for (int j = i+1; j < nums.Length; j++)
+                    var popped = stack.Pop();
+                    if (popped.Count == 0)
                     {
-                        j = FindNextIndexToSkipTo(ref skipTo, j);
-                        if (j == -1)
-                            break;
-
-                        var r = nums[j];
-
-                        if (l > r)
+                        cnt++;
+                    }
+                    else if (popped.Count != 0)
+                    {
+                        if (popped.Count > cnt)
                         {
-                            l = nums[j];
-                            skipTo[j] = j+1;
-                            goAgain = true;
+                            cnt += (popped.Count - cnt);
                         }
                         else
                         {
-                            i = j-1;
-                            break;
+                            cnt ++;
                         }
                     }
                 }
 
-                if (goAgain)
-                    totalSteps++;
-
-            } while (goAgain);
-
-
-            return totalSteps;
-        }
-
-        private int FindNextIndexToSkipTo(ref int[] skipTo, int index)
-        {
-            var initialIndex = index;
-            var replace = false;
-
-            while (index < skipTo.Length && skipTo[index] != 0)
-            {
-                index = skipTo[index];
-                replace = true;
+                stack.Push( new Pair() { Number = nums[i], Count = cnt});
+                totalSteps = Math.Max(cnt, totalSteps);
             }
 
-            if (index >= skipTo.Length)
-                return -1;
-            
-            if (replace)
-                skipTo[initialIndex] = index;
-
-            return index;
+            return totalSteps;
         }
     }
 }
