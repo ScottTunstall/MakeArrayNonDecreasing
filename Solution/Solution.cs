@@ -61,14 +61,20 @@ namespace MakeArrayNonDecreasing
 
         private int FindNextIndexToSkipTo(ref int[] skipTo, int index)
         {
-            
+            var initialIndex = index;
+            var replace = false;
+
             while (index < skipTo.Length && skipTo[index] != 0)
             {
                 index = skipTo[index];
+                replace = true;
             }
 
             if (index >= skipTo.Length)
                 return -1;
+            
+            if (replace)
+                skipTo[initialIndex] = index;
 
             return index;
         }
