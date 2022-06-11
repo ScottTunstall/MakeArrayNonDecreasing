@@ -12,6 +12,7 @@ namespace MakeArrayNonDecreasing
         {
             int totalSteps = 0;
 
+            var skipTo = new int[nums.Length];
 
             bool goAgain;
 
@@ -21,22 +22,24 @@ namespace MakeArrayNonDecreasing
 
                 for (int i = 0; i < nums.Length; i++)
                 {
-                    if (nums[i] == int.MaxValue)
-                        continue;
+                    i = FindNextIndexToSkipTo(ref skipTo, i);
+                    if (i == -1)
+                        break;
 
                     var l = nums[i];
 
                     for (int j = i+1; j < nums.Length; j++)
                     {
-                        if (nums[j] == int.MaxValue)
-                            continue;
+                        j = FindNextIndexToSkipTo(ref skipTo, j);
+                        if (j == -1)
+                            break;
 
                         var r = nums[j];
 
                         if (l > r)
                         {
                             l = nums[j];
-                            nums[j] = int.MaxValue;
+                            skipTo[j] = j+1;
                             goAgain = true;
                         }
                         else
@@ -54,6 +57,19 @@ namespace MakeArrayNonDecreasing
 
 
             return totalSteps;
+        }
+
+        private int FindNextIndexToSkipTo(ref int[] skipTo, int i)
+        {
+            while (skipTo[i] != 0)
+            {
+                i = skipTo[i];
+            }
+
+            if (i > skipTo.Length)
+                return -1;
+
+            return i;
         }
     }
 }
