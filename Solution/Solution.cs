@@ -13,6 +13,17 @@ namespace MakeArrayNonDecreasing
         {
             public int Number;
             public int Count;
+
+            public Pair(int number, int count)
+            {
+                Number = number;
+                Count = count;
+            }
+
+            public override string ToString()
+            {
+                return $"Number: {Number}   Count: {Count}";
+            }
         }
 
         public int TotalSteps(int[] nums)
@@ -30,7 +41,7 @@ namespace MakeArrayNonDecreasing
                     {
                         cnt++;
                     }
-                    else if (popped.Count != 0)
+                    else 
                     {
                         if (popped.Count > cnt)
                         {
@@ -43,7 +54,7 @@ namespace MakeArrayNonDecreasing
                     }
                 }
 
-                stack.Push( new Pair() { Number = nums[i], Count = cnt});
+                stack.Push(new Pair(number: nums[i], count: cnt));
                 totalSteps = Math.Max(cnt, totalSteps);
             }
 
