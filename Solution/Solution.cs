@@ -12,32 +12,46 @@ namespace MakeArrayNonDecreasing
         {
             int totalSteps = 0;
 
-            var asList = new List<int>(nums);
 
-            for (;;)
+            bool goAgain;
+
+            do
             {
-                int left = 0;
-                bool goAgain = false;
+                goAgain = false;
 
-                while (left < asList.Count- 1)
+                for (int i = 0; i < nums.Length; i++)
                 {
-                    var lValue = asList[left];
-                    var rValue = asList[left+1];
+                    if (nums[i] == int.MaxValue)
+                        continue;
 
-                    if (lValue > rValue)
+                    var l = nums[i];
+
+                    for (int j = i+1; j < nums.Length; j++)
                     {
-                        asList.RemoveAt(left+1);
-                        goAgain = true;
+                        if (nums[j] == int.MaxValue)
+                            continue;
+
+                        var r = nums[j];
+
+                        if (l > r)
+                        {
+                            l = nums[j];
+                            nums[j] = int.MaxValue;
+                            goAgain = true;
+                        }
+                        else
+                        {
+                            i = j-1;
+                            break;
+                        }
                     }
-
-                    left++;
                 }
-                
-                totalSteps++;
 
-                if (!goAgain)
-                    break;
-            }
+                if (goAgain)
+                    totalSteps++;
+
+            } while (goAgain);
+
 
             return totalSteps;
         }
