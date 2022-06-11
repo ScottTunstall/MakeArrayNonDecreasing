@@ -22,5 +22,16 @@ namespace Tests
 
             Assert.AreEqual(3, totalSteps);
         }
+
+
+        [TestMethod]
+        public void TestMethod2()
+        {
+            int[] nums = {10, 1, 2, 3, 4, 5, 6, 1, 2, 3};
+
+            var totalSteps = _sut.TotalSteps(nums);
+
+            Assert.IsTrue(totalSteps != 0);
+        }
     }
 }

@@ -59,17 +59,18 @@ namespace MakeArrayNonDecreasing
             return totalSteps;
         }
 
-        private int FindNextIndexToSkipTo(ref int[] skipTo, int i)
+        private int FindNextIndexToSkipTo(ref int[] skipTo, int index)
         {
-            while (skipTo[i] != 0)
+            
+            while (index < skipTo.Length && skipTo[index] != 0)
             {
-                i = skipTo[i];
+                index = skipTo[index];
             }
 
-            if (i > skipTo.Length)
+            if (index >= skipTo.Length)
                 return -1;
 
-            return i;
+            return index;
         }
     }
 }
