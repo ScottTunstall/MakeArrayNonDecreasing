@@ -49,5 +49,17 @@ namespace Tests
 
 
 
+        [TestMethod]
+        public void TestMethod4()
+        {
+            int[] nums = { 10, 1, 2, 3, 4, 5, 7, 6, 1, 5, 2, 3 };
+
+            var totalSteps = _sut.TotalSteps(nums);
+
+            Assert.AreEqual(6, totalSteps);
+        }
+
+
+
     }
 }

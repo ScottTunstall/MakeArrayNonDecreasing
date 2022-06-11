@@ -33,8 +33,10 @@ namespace MakeArrayNonDecreasing
             
             for (int i = nums.Length- 1; i >= 0; i--)
             {
+                var val = nums[i];
                 int cnt = 0;
-                while (stack.Count > 0 && stack.Peek().Number < nums[i])
+
+                while (stack.Count > 0 && stack.Peek().Number < val)
                 {
                     var popped = stack.Pop();
                     if (popped.Count == 0)
