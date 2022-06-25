@@ -28,31 +28,26 @@ namespace MakeArrayNonDecreasing
 
         public int TotalSteps(int[] nums)
         {
-            Stack<Pair> stack = new ();
+            Stack<Pair> stack = new();
             int totalSteps = 0;
-            
-            for (int i = nums.Length- 1; i >= 0; i--)
+
+            for (int i = nums.Length - 1; i >= 0; i--)
             {
                 var val = nums[i];
+
                 int cnt = 0;
 
                 while (stack.Count > 0 && stack.Peek().Number < val)
                 {
                     var popped = stack.Pop();
-                    if (popped.Count == 0)
+
+                    if (popped.Count > cnt)
+                    {
+                        cnt += (popped.Count - cnt);
+                    }
+                    else
                     {
                         cnt++;
-                    }
-                    else 
-                    {
-                        if (popped.Count > cnt)
-                        {
-                            cnt += (popped.Count - cnt);
-                        }
-                        else
-                        {
-                            cnt ++;
-                        }
                     }
                 }
 
